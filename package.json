@@ -1,0 +1,22 @@
+{
+  "name": "nextjs-base",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^9.2.2",
+    "normalize.css": "^8.0.1",
+    "postcss-easy-import": "^3.0.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "devDependencies": {
+    "node-sass": "^4.13.1",
+    "raw-loader": "^4.0.0"
+  }
+}

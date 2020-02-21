@@ -1,68 +1,32 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import breakpoint from '../styles/breakpoints.scss';
+import { ServerStyleSheet } from 'styled-components';
 
 class MyDocument extends Document {
+  static getInitialProps({ renderPage }) {
+    // Step 1: Create an instance of ServerStyleSheet
+    const sheet = new ServerStyleSheet();
+
+    // Step 2: Retrieve styles from components in the page
+    const page = renderPage(App => props =>
+      sheet.collectStyles(<App {...props} />),
+    );
+
+    // Step 3: Extract the styles as <style> tags
+    const styleTags = sheet.getStyleElement();
+
+    // Step 4: Pass styleTags as a prop
+    return { ...page, styleTags };
+  }
   render() {
     return (
       <>
         <Html lang="en">
-          <Head />
+          <Head>{this.props.styleTags}</Head>
           <body>
             <Main />
             <NextScript />
           </body>
         </Html>
-
-        <style global jsx>{`
-          html {
-            font-size: calc(1em * 0.625);
-          }
-          body {
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-              'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-              'Helvetica Neue', sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-          }
-          code {
-            font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-              monospace;
-          }
-          h1 {
-            font-size: 2.4rem;
-          }
-          p,
-          ul,
-          ol,
-          li,
-          a {
-            font-size: 1.6rem;
-            line-height: 1.4;
-          }
-          ul,
-          ol,
-          li {
-            list-style: none;
-          }
-          .row {
-            display: flex;
-            flex-direction: column;
-          }
-          @media ${breakpoint.tablet} {
-            .row {
-              flex-direction: row;
-            }
-          }
-          .main {
-            width: 100%;
-          }
-          .content {
-            max-width: 144rem;
-            margin: 0 auto;
-            padding: 0 2rem;
-          }
-        `}</style>
       </>
     );
   }
